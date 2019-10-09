@@ -5,11 +5,11 @@ terraform {
 }
 
 provider "aws" {
-  version = "~> 1.31"
+  version = "~> 2.31"
 }
 
 provider "random" {
-  version = "~> 1.3"
+  version = "~> 2.2"
 }
 
 # These aws_instances will be targeted with the operating_system control and the
@@ -21,9 +21,9 @@ resource "aws_instance" "remote_group" {
   key_name      = "${aws_key_pair.extensive_tutorial.key_name}"
   subnet_id     = "${aws_subnet.extensive_tutorial.id}"
 
-  tags {
-    Name      = "kitchen-terraform-test-target-${count.index}"
-    Terraform = "true"
+  tags = {
+    "Name"      = "kitchen-terraform-test-target-${count.index}",
+    "Terraform" = "true"
   }
 
   vpc_security_group_ids = ["${aws_security_group.extensive_tutorial.id}"]
@@ -39,9 +39,9 @@ resource "aws_instance" "reachable_other_host" {
   key_name                    = "${aws_key_pair.extensive_tutorial.key_name}"
   subnet_id                   = "${aws_subnet.extensive_tutorial.id}"
 
-  tags {
-    Name      = "kitchen-terraform-reachable-other-host"
-    Terraform = "true"
+  tags = {
+    "Name"      = "kitchen-terraform-reachable-other-host",
+    "Terraform" = "true"
   }
 
   vpc_security_group_ids = ["${aws_security_group.extensive_tutorial.id}"]
@@ -77,9 +77,9 @@ resource "aws_security_group" "extensive_tutorial" {
 
   name = "kitchen-terraform-extensive_tutorial"
 
-  tags {
-    Name      = "kitchen-terraform-extensive_tutorial"
-    Terraform = "true"
+  tags = {
+    "Name"      = "kitchen-terraform-extensive_tutorial",
+    "Terraform" = "true"
   }
 
   vpc_id = "${aws_vpc.extensive_tutorial.id}"
@@ -96,8 +96,8 @@ resource "aws_route_table" "extensive_tutorial" {
     gateway_id = "${aws_internet_gateway.extensive_tutorial.id}"
   }
 
-  tags {
-    Name = "kitchen_terraform_extensive_tutorial"
+  tags = {
+    "Name" = "kitchen_terraform_extensive_tutorial"
   }
 
   vpc_id = "${aws_vpc.extensive_tutorial.id}"
@@ -105,7 +105,7 @@ resource "aws_route_table" "extensive_tutorial" {
 
 resource "aws_internet_gateway" "extensive_tutorial" {
   tags = {
-    Name = "kitchen_terraform_extensive_tutorial"
+    "Name" = "kitchen_terraform_extensive_tutorial"
   }
 
   vpc_id = "${aws_vpc.extensive_tutorial.id}"
@@ -116,8 +116,8 @@ resource "aws_subnet" "extensive_tutorial" {
   cidr_block              = "192.168.1.0/24"
   map_public_ip_on_launch = "true"
 
-  tags {
-    Name = "kitchen_terraform_extensive_tutorial"
+  tags = {
+    "Name" = "kitchen_terraform_extensive_tutorial"
   }
 
   vpc_id = "${aws_vpc.extensive_tutorial.id}"
@@ -127,7 +127,7 @@ resource "aws_vpc" "extensive_tutorial" {
   cidr_block           = "192.168.0.0/16"
   enable_dns_hostnames = "true"
 
-  tags {
-    Name = "kitchen_terraform_extensive_tutorial"
+  tags = {
+    "Name" = "kitchen_terraform_extensive_tutorial"
   }
 }

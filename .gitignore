@@ -1,0 +1,4 @@
+Gemfile.lock
+.kitchen
+.terraform
+test/fixtures/wrapper/terraform.tfstate.d/

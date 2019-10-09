@@ -80,7 +80,7 @@ output "remote_group_public_dns" {
   value       = "${aws_instance.remote_group.*.public_dns}" # no [] - brackets here
 }
 ```
-6. macOS Mojave sepcific!!! The way how default "ssh-keygen" in macOS Mojave tuned you going to expireince problem with ssh key, so appen `-m PEM` to the command for ssh key generation. It should look like :
+6. **macOS Mojave specific!!!** The way how default "ssh-keygen" in macOS Mojave tuned you going to expireince problem with ssh key, so appen `-m PEM` to the command for ssh key generation. It should look like :
 ```sh
 ssh-keygen \                                   
   -b 4096 \       

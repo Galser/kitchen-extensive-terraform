@@ -58,6 +58,7 @@ platforms:
           # authentication performed by InSpec
           key_files:
             - test/assets/key_pair
+            - ~/.ssh/id_rsa
 
           user: centos
 

@@ -66,49 +66,33 @@ That's why there is `.ruby-version` file in the repo
     E, [2019-10-09T14:32:08.676651 #33979] ERROR -- extensive-suite-ubuntu: Class: Kitchen::Terraform::Error
     E, [2019-10-09T14:32:08.676670 #33979] ERROR -- extensive-suite-ubuntu: Message: remote: Cannot find input file 'test/integration/extensive_suite/ubuntu_attributes.yml'. Check to make sure file exists.
     ```
-5. Kitchen still can produce errors in the very end when parsing running time, I cant' confirm yet this 100%%, that's outside the scope of tutorial. But the tests are passing :
-```
-Verifying
+5. From Terrraform 0.12.07 the format of outputs for arrays had changed slighlty, actually simplifying code, so, I've edited outputs.tf in both fixtures and main repo location correspondingly to : 
+```terraform
+output "remote_group_public_dns" {
+  description = "This output is used to obtain targets for InSpec"
 
-Profile: Extensive Kitchen-Terraform (extensive_suite)
-Version: 0.1.0
-Target:  local://
-
-  ✔  state_file: 0.12.9
-     ✔  0.12.9 is expected to match /\d+\.\d+\.\d+/
-  ✔  inspec_attributes: static terraform output
-     ✔  static terraform output is expected to eq "static terraform output"
-     ✔  static terraform output is expected to eq "static terraform output"
-
-
-Profile Summary: 2 successful controls, 0 control failures, 0 controls skipped
-Test Summary: 3 successful, 0 failures, 0 skipped
+  value = "${module.extensive_kitchen_terraform.remote_group_public_dns}" # no [] - brackets here
+}
+```terraform
+and main `outputs.tf` :
+output "remote_group_public_dns" {
+  description = "The list of public DNS names of the remote_group instances"
+  value       = "${aws_instance.remote_group.*.public_dns}" # no [] - brackets here
+}
 ```
-And looks like later in the execution process, at the very end, we hitting KitchenCI bug  
+6. macOS Mojave sepcific!!! The way how default "ssh-keygen" in macOS Mojave tuned you going to expireince problem with ssh key, so appen `-m PEM` to the command for ssh key generation. It should look like :
+```sh
+ssh-keygen \                                   
+  -b 4096 \       
+  -C "Kitchen-Terraform AWS provider tutorial" \
+  -f test/assets/key_pair \
+  -N "" \
+  -t rsa \
+  -m PEM
 ```
->>>>>> ------Exception-------
->>>>>> Class: Kitchen::ActionFailed
->>>>>> Message: 1 actions failed.
->>>>>>     Verify failed on instance <extensive-suite-ubuntu>.  Please see .kitchen/logs/extensive-suite-ubuntu.log for more details
->>>>>> ----------------------
->>>>>> Please see .kitchen/logs/kitchen.log for more details
->>>>>> Also try running `kitchen diagnose --all` for configuration
-```
-Where logs bearing these lines : 
-```
-E, [2019-10-09T15:02:21.590012 #35830] ERROR -- extensive-suite-ubuntu: ------Exception-------
-E, [2019-10-09T15:02:21.590099 #35830] ERROR -- extensive-suite-ubuntu: Class: Kitchen::ActionFailed
-E, [2019-10-09T15:02:21.590121 #35830] ERROR -- extensive-suite-ubuntu: Message: remote: no implicit conversion of Array into String
-E, [2019-10-09T15:02:21.590141 #35830] ERROR -- extensive-suite-ubuntu: ----------------------
-E, [2019-10-09T15:02:21.590161 #35830] ERROR -- extensive-suite-ubuntu: ------Backtrace-------
-E, [2019-10-09T15:02:21.590180 #35830] ERROR -- extensive-suite-ubuntu: /Users/andrii/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/kitchen-terraform-4.9.0/lib/kitchen/verifier/terraform.rb:96:in `rescue in call'
-E, [2019-10-09T15:02:21.590199 #35830] ERROR -- extensive-suite-ubuntu: /Users/andrii/.rbenv/versions/2.3.1/lib/ruby/gems/2.3.0/gems/kitchen-terraform-4.9.0/lib/kitchen/verifier/terraform.rb:90:in `call'
-...
-```
-going to check later what's happening
 
 # Todo
-- [ ] find out why KitchenCI failing on some test with "remote: no implicit conversion of Array into String"
+- [ ] fix the error on test 5
 
 # Done
 - [x] intro readme
@@ -120,3 +104,4 @@ going to check later what's happening
 - [x] - Create Test Kitchen Configuration
 - [x] - Test Terraform Module
 - [x] - write the required changes to the tutorial
+- [x] find out why KitchenCI failing on some test with "remote: no implicit conversion of Array into String"

@@ -28,28 +28,28 @@ That's why there is `.ruby-version` file in the repo
 3. Also `main.tf` should contain other version restrictions, mine file starts as follows : 
     ```terraform
     terraform {
-    # The configuration is restricted to Terraform versions supported by
-    # Kitchen-Terraform
-    required_version = ">= 0.11.4, <= 0.12.9" # <-- this changed >
+      # The configuration is restricted to Terraform versions supported by
+      # Kitchen-Terraform
+      required_version = ">= 0.11.4, <= 0.12.9" # <-- this changed >
     }
 
     provider "aws" {
-    version = "~> 2.31" # <-- this changed >
+      version = "~> 2.31" # <-- this changed >
     }
 
     provider "random" {
-    version = "~> 2.2" # <-- this changed >
+      version = "~> 2.2" # <-- this changed >
     }
     ```
-4. They missing in the tutorial populating files with OS-specific attributes. e.g. 2 additional files must present in `test/integration/extensive_suite/` :
-`centos_attributes.yml` with content : 
-    ```
-    instances_ami_operating_system_name: centos
-    ```
-    and `ubuntu_attributes.yml` with contents : 
-    ```
-    instances_ami_operating_system_name: ubuntu
-    ```
+4. They missing in the tutorial populating files with OS-specific attributes. e.g. 2 additional files must present in [test/integration/extensive_suite/](test/integration/extensive_suite/) :
+    - `centos_attributes.yml` with content : 
+        ```
+        instances_ami_operating_system_name: centos
+        ```
+    - `ubuntu_attributes.yml` with content : 
+        ```
+        instances_ami_operating_system_name: ubuntu
+        ```
     Otherwise you are goign to have some fails : 
     ```
     >>>>>> ------Exception-------
@@ -66,45 +66,18 @@ That's why there is `.ruby-version` file in the repo
     E, [2019-10-09T14:32:08.676651 #33979] ERROR -- extensive-suite-ubuntu: Class: Kitchen::Terraform::Error
     E, [2019-10-09T14:32:08.676670 #33979] ERROR -- extensive-suite-ubuntu: Message: remote: Cannot find input file 'test/integration/extensive_suite/ubuntu_attributes.yml'. Check to make sure file exists.
     ```
-5. From Terrraform 0.12.07 the format of outputs for arrays had changed slighlty, actually simplifying code, so, I've edited outputs.tf in both fixtures and main repo location correspondingly to : 
-```terraform
-output "remote_group_public_dns" {
-  description = "This output is used to obtain targets for InSpec"
-
-  value = "${module.extensive_kitchen_terraform.remote_group_public_dns}" # no [] - brackets here
-}
-```terraform
-and main `outputs.tf` :
-output "remote_group_public_dns" {
-  description = "The list of public DNS names of the remote_group instances"
-  value       = "${aws_instance.remote_group.*.public_dns}" # no [] - brackets here
-}
-```
-6. **macOS Mojave specific!!!** The way how default "ssh-keygen" in macOS Mojave tuned you going to experience a problem with SSH key, so append `-m PEM` to the command for ssh key generation. It should look like :
-```sh
-ssh-keygen \                                   
-  -b 4096 \       
-  -C "Kitchen-Terraform AWS provider tutorial" \
-  -f test/assets/key_pair \
-  -N "" \
-  -t rsa \
-  -m PEM
-```
-> Note : Default on Mojave is now to generate RFC4716 key pairs, which won't work with this environment.
-
-7. There is an error in handling attributes reading vs input variables in the [operating_systems.rb](test/integration/extensive_suite/controls/operating_system.rb) test. 
+5. One more small bug connected wih the files above -  in handling attributes reading vs input variables in the [operating_systems.rb](test/integration/extensive_suite/controls/operating_system.rb) test. 
     It should be written down as follows : 
     ```ruby
     instances_ami_operating_system_name = attribute('instances_ami_operating_system_name', description: 'name of the operating system on the targeted host')
         control "operating_system" do
         desc "Verifies the name of the operating system on the targeted host"
         describe os.name do
-            
             it { should eq instances_ami_operating_system_name}
         end
     end
     ```
-    As original file just defines attribute attribute and its value in [ubuntu_attributes.yml](test/integration/extensive_suite/ubuntu_attributes.yml), but do not define them as variables in control. So, unless you apply the fix you cna have this error : 
+    As original file just defines attribute attribute and its value for example in [ubuntu_attributes.yml](test/integration/extensive_suite/ubuntu_attributes.yml), but do not define them as variables in control. So, unless you apply the fix you can have this error : 
     ```shell
     Profile: Extensive Kitchen-Terraform (extensive_suite)
     Version: 0.1.0
@@ -122,8 +95,36 @@ ssh-keygen \
     Profile Summary: 1 successful control, 1 control failure, 0 controls skipped
     Test Summary: 1 successful, 1 failure, 0 skipped
     ```
-    See short run log at the end of the readme - [here](#run-logs)
-    - Full run log file for 'us-west-2' can be found here [test.log](test.log)
+6. From Terrraform 0.12.07 the format of outputs for arrays had changed slighlty, actually simplifying code, so, I've edited `outputs.tf` in both fixtures and main repo location correspondingly to : 
+    - Wrapper fixture : [test/fixtures/wrapper/outputs.tf](test/fixtures/wrapper/outputs.tf)
+    ```terraform
+    output "remote_group_public_dns" {
+      description = "This output is used to obtain targets for InSpec"
+
+      value = "${module.extensive_kitchen_terraform.remote_group_public_dns}" # no [] - brackets here
+    }
+    ```
+    - Main one : [outputs.tf](outputs.tf)
+    ```terraform
+    and main `outputs.tf` :
+    output "remote_group_public_dns" {
+      description = "The list of public DNS names of the remote_group instances"
+      value       = "${aws_instance.remote_group.*.public_dns}" # no [] - brackets here
+    }
+    ```
+7. **macOS Mojave specific!!!** The way how default "ssh-keygen" in macOS Mojave configured ( Default is now to generate RFC4716 key pairs, which won't work with this environmen) you are going to experience a problem with SSH key, so append `-m PEM` to the command for ssh key generation. It should look like :
+    ```sh
+    ssh-keygen \                                   
+      -b 4096 \       
+      -C "Kitchen-Terraform AWS provider tutorial" \
+      -f test/assets/key_pair \
+      -N "" \
+      -t rsa \
+      -m PEM
+    ```
+    
+- See short run log at the end of the readme - [here](#run-logs)
+- Full run log file for 'us-west-2' can be found here [test.log](test.log)
 
     
 # Todo

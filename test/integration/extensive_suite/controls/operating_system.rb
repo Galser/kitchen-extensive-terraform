@@ -13,11 +13,11 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
+instances_ami_operating_system_name = attribute('instances_ami_operating_system_name', description: 'name of the operating system on the targeted host')
 control "operating_system" do
   desc "Verifies the name of the operating system on the targeted host"
-
   describe os.name do
-    it { should eq attribute("instances_ami_operating_system_name") }
+    
+    it { should eq instances_ami_operating_system_name}
   end
 end

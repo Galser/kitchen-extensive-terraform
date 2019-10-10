@@ -1,0 +1,244 @@
+-----> Starting Kitchen (v1.25.0)
+-----> Cleaning up any prior instances of <extensive-suite-ubuntu>
+-----> Destroying <extensive-suite-ubuntu>...
+       Terraform v0.12.9
+       
+       Your version of Terraform is out of date! The latest version
+       is 0.12.10. You can update by downloading from www.terraform.io/downloads.html
+$$$$$$ Running command `terraform init -input=false -lock=true -lock-timeout=0s  -force-copy -backend=true  -get=true -get-plugins=true -verify-plugins=true` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Initializing modules...
+       
+       Initializing the backend...
+       
+       Initializing provider plugins...
+       
+       Terraform has been successfully initialized!
+$$$$$$ Running command `terraform workspace select kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       
+       Workspace "kitchen-terraform-extensive-suite-ubuntu" doesn't exist.
+       
+       You can create this workspace with the "new" subcommand.
+$$$$$$ Running command `terraform workspace new kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Created and switched to workspace "kitchen-terraform-extensive-suite-ubuntu"!
+       
+       You're now on a new, empty workspace. Workspaces isolate their state,
+       so if you run "terraform plan" Terraform will not see any existing state
+       for this configuration.
+$$$$$$ Running command `terraform destroy -auto-approve -lock=true -lock-timeout=0s -input=false  -parallelism=10 -refresh=true -var="instances_ami=ami-1ee65166" -var="subnet_availability_zone=us-west-2b" ` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       
+       Destroy complete! Resources: 0 destroyed.
+$$$$$$ Running command `terraform workspace select default` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Switched to workspace "default".
+$$$$$$ Running command `terraform workspace delete kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Deleted workspace "kitchen-terraform-extensive-suite-ubuntu"!
+       Finished destroying <extensive-suite-ubuntu> (0m4.40s).
+-----> Testing <extensive-suite-ubuntu>
+-----> Creating <extensive-suite-ubuntu>...
+       Terraform v0.12.9
+       
+       Your version of Terraform is out of date! The latest version
+       is 0.12.10. You can update by downloading from www.terraform.io/downloads.html
+$$$$$$ Running command `terraform init -input=false -lock=true -lock-timeout=0s  -upgrade -force-copy -backend=true  -get=true -get-plugins=true -verify-plugins=true` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Upgrading modules...
+       - extensive_kitchen_terraform in ../../..
+       
+       Initializing the backend...
+       
+       Initializing provider plugins...
+       - Checking for available provider plugins...
+       - Downloading plugin for provider "random" (hashicorp/random) 2.2.1...
+       - Downloading plugin for provider "aws" (hashicorp/aws) 2.31.0...
+       
+       Terraform has been successfully initialized!
+$$$$$$ Running command `terraform workspace select kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       
+       Workspace "kitchen-terraform-extensive-suite-ubuntu" doesn't exist.
+       
+       You can create this workspace with the "new" subcommand.
+$$$$$$ Running command `terraform workspace new kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Created and switched to workspace "kitchen-terraform-extensive-suite-ubuntu"!
+       
+       You're now on a new, empty workspace. Workspaces isolate their state,
+       so if you run "terraform plan" Terraform will not see any existing state
+       for this configuration.
+       Finished creating <extensive-suite-ubuntu> (0m8.72s).
+-----> Converging <extensive-suite-ubuntu>...
+       Terraform v0.12.9
+       
+       Your version of Terraform is out of date! The latest version
+       is 0.12.10. You can update by downloading from www.terraform.io/downloads.html
+$$$$$$ Running command `terraform workspace select kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+$$$$$$ Running command `terraform get -update` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       - extensive_kitchen_terraform in ../../..
+$$$$$$ Running command `terraform validate  -var="instances_ami=ami-1ee65166" -var="subnet_availability_zone=us-west-2b" ` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Success! The configuration is valid.
+       
+$$$$$$ Running command `terraform apply -lock=true -lock-timeout=0s -input=false -auto-approve=true  -parallelism=10 -refresh=true -var="instances_ami=ami-1ee65166" -var="subnet_availability_zone=us-west-2b" ` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       module.extensive_kitchen_terraform.random_string.key_name: Creating...
+       module.extensive_kitchen_terraform.random_string.key_name: Creation complete after 0s [id=pLemH84MM]
+       module.extensive_kitchen_terraform.aws_key_pair.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_vpc.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_key_pair.extensive_tutorial: Creation complete after 2s [id=kitchen-terraform-pLemH84MM]
+       module.extensive_kitchen_terraform.aws_vpc.extensive_tutorial: Still creating... [10s elapsed]
+       module.extensive_kitchen_terraform.aws_vpc.extensive_tutorial: Creation complete after 12s [id=vpc-011d957e65c302fea]
+       module.extensive_kitchen_terraform.aws_internet_gateway.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_subnet.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_security_group.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_subnet.extensive_tutorial: Creation complete after 4s [id=subnet-00c2dd3ed7e5e77dc]
+       module.extensive_kitchen_terraform.aws_internet_gateway.extensive_tutorial: Creation complete after 5s [id=igw-0496fa4845e286ca4]
+       module.extensive_kitchen_terraform.aws_route_table.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_security_group.extensive_tutorial: Creation complete after 8s [id=sg-072c3674363e136a3]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Creating...
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Creating...
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Creating...
+       module.extensive_kitchen_terraform.aws_route_table.extensive_tutorial: Creation complete after 4s [id=rtb-0b24ff4f452c039eb]
+       module.extensive_kitchen_terraform.aws_route_table_association.extensive_tutorial: Creating...
+       module.extensive_kitchen_terraform.aws_route_table_association.extensive_tutorial: Creation complete after 1s [id=rtbassoc-0827589f22d5b3599]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still creating... [10s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still creating... [10s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Still creating... [10s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still creating... [20s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still creating... [20s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Still creating... [20s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still creating... [30s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still creating... [30s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Still creating... [30s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Creation complete after 30s [id=i-0b1298fbdfabcb925]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still creating... [40s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still creating... [40s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Creation complete after 41s [id=i-02df29b20dd2a0c42]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Creation complete after 41s [id=i-08299d6de5854779e]
+       
+       Apply complete! Resources: 11 added, 0 changed, 0 destroyed.
+       
+       Outputs:
+       
+       reachable_other_host_ip_address = 34.219.164.225
+       
+       remote_group_public_dns = [
+         "ec2-34-222-158-56.us-west-2.compute.amazonaws.com",
+         "ec2-54-245-153-246.us-west-2.compute.amazonaws.com",
+       ]
+       static_terraform_output = static terraform output
+       terraform_state = /Users.../kitchen-extensive-terraform/test/fixtures/wrapper/terraform.tfstate.d/kitchen-terraform-extensive-suite-ubuntu/terraform.tfstate
+       Finished converging <extensive-suite-ubuntu> (1m9.59s).
+-----> Setting up <extensive-suite-ubuntu>...
+       Finished setting up <extensive-suite-ubuntu> (0m0.00s).
+-----> Verifying <extensive-suite-ubuntu>...
+$$$$$$ Running command `terraform workspace select kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+$$$$$$ Running command `terraform output -json` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+local: Verifying
+
+Profile: Extensive Kitchen-Terraform (extensive_suite)
+Version: 0.1.0
+Target:  local://
+
+  ✔  state_file: 0.12.9
+     ✔  0.12.9 is expected to match /\d+\.\d+\.\d+/
+  ✔  inspec_attributes: static terraform output
+     ✔  static terraform output is expected to eq "static terraform output"
+     ✔  static terraform output is expected to eq "static terraform output"
+
+
+Profile Summary: 2 successful controls, 0 control failures, 0 controls skipped
+Test Summary: 3 successful, 0 failures, 0 skipped
+remote: Verifying host ec2-34-222-158-56.us-west-2.compute.amazonaws.com
+
+Profile: Extensive Kitchen-Terraform (extensive_suite)
+Version: 0.1.0
+Target:  ssh://ubuntu@ec2-34-222-158-56.us-west-2.compute.amazonaws.com:22
+
+  ✔  operating_system: ubuntu
+     ✔  ubuntu is expected to eq "ubuntu"
+  ✔  reachable_other_host: Host 34.219.164.225
+
+     ✔  Host 34.219.164.225
+      is expected to be reachable
+
+
+Profile Summary: 2 successful controls, 0 control failures, 0 controls skipped
+Test Summary: 2 successful, 0 failures, 0 skipped
+remote: Verifying host ec2-54-245-153-246.us-west-2.compute.amazonaws.com
+
+Profile: Extensive Kitchen-Terraform (extensive_suite)
+Version: 0.1.0
+Target:  ssh://ubuntu@ec2-54-245-153-246.us-west-2.compute.amazonaws.com:22
+
+  ✔  operating_system: ubuntu
+     ✔  ubuntu is expected to eq "ubuntu"
+  ✔  reachable_other_host: Host 34.219.164.225
+
+     ✔  Host 34.219.164.225
+      is expected to be reachable
+
+
+Profile Summary: 2 successful controls, 0 control failures, 0 controls skipped
+Test Summary: 2 successful, 0 failures, 0 skipped
+       Finished verifying <extensive-suite-ubuntu> (0m15.42s).
+-----> Destroying <extensive-suite-ubuntu>...
+       Terraform v0.12.9
+       
+       Your version of Terraform is out of date! The latest version
+       is 0.12.10. You can update by downloading from www.terraform.io/downloads.html
+$$$$$$ Running command `terraform init -input=false -lock=true -lock-timeout=0s  -force-copy -backend=true  -get=true -get-plugins=true -verify-plugins=true` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Initializing modules...
+       
+       Initializing the backend...
+       
+       Initializing provider plugins...
+       
+       Terraform has been successfully initialized!
+$$$$$$ Running command `terraform workspace select kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+$$$$$$ Running command `terraform destroy -auto-approve -lock=true -lock-timeout=0s -input=false  -parallelism=10 -refresh=true -var="instances_ami=ami-1ee65166" -var="subnet_availability_zone=us-west-2b" ` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       module.extensive_kitchen_terraform.random_string.key_name: Refreshing state... [id=pLemH84MM]
+       module.extensive_kitchen_terraform.aws_key_pair.extensive_tutorial: Refreshing state... [id=kitchen-terraform-pLemH84MM]
+       module.extensive_kitchen_terraform.aws_vpc.extensive_tutorial: Refreshing state... [id=vpc-011d957e65c302fea]
+       module.extensive_kitchen_terraform.aws_internet_gateway.extensive_tutorial: Refreshing state... [id=igw-0496fa4845e286ca4]
+       module.extensive_kitchen_terraform.aws_subnet.extensive_tutorial: Refreshing state... [id=subnet-00c2dd3ed7e5e77dc]
+       module.extensive_kitchen_terraform.aws_security_group.extensive_tutorial: Refreshing state... [id=sg-072c3674363e136a3]
+       module.extensive_kitchen_terraform.aws_route_table.extensive_tutorial: Refreshing state... [id=rtb-0b24ff4f452c039eb]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Refreshing state... [id=i-02df29b20dd2a0c42]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Refreshing state... [id=i-08299d6de5854779e]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Refreshing state... [id=i-0b1298fbdfabcb925]
+       module.extensive_kitchen_terraform.aws_route_table_association.extensive_tutorial: Refreshing state... [id=rtbassoc-0827589f22d5b3599]
+       module.extensive_kitchen_terraform.aws_route_table_association.extensive_tutorial: Destroying... [id=rtbassoc-0827589f22d5b3599]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Destroying... [id=i-02df29b20dd2a0c42]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Destroying... [id=i-08299d6de5854779e]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Destroying... [id=i-0b1298fbdfabcb925]
+       module.extensive_kitchen_terraform.aws_route_table_association.extensive_tutorial: Destruction complete after 1s
+       module.extensive_kitchen_terraform.aws_route_table.extensive_tutorial: Destroying... [id=rtb-0b24ff4f452c039eb]
+       module.extensive_kitchen_terraform.aws_route_table.extensive_tutorial: Destruction complete after 2s
+       module.extensive_kitchen_terraform.aws_internet_gateway.extensive_tutorial: Destroying... [id=igw-0496fa4845e286ca4]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still destroying... [id=i-02df29b20dd2a0c42, 10s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still destroying... [id=i-08299d6de5854779e, 10s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Still destroying... [id=i-0b1298fbdfabcb925, 10s elapsed]
+       module.extensive_kitchen_terraform.aws_internet_gateway.extensive_tutorial: Still destroying... [id=igw-0496fa4845e286ca4, 10s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still destroying... [id=i-02df29b20dd2a0c42, 20s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Still destroying... [id=i-0b1298fbdfabcb925, 20s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still destroying... [id=i-08299d6de5854779e, 20s elapsed]
+       module.extensive_kitchen_terraform.aws_internet_gateway.extensive_tutorial: Destruction complete after 18s
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Still destroying... [id=i-0b1298fbdfabcb925, 30s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Still destroying... [id=i-08299d6de5854779e, 30s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Still destroying... [id=i-02df29b20dd2a0c42, 30s elapsed]
+       module.extensive_kitchen_terraform.aws_instance.remote_group[0]: Destruction complete after 33s
+       module.extensive_kitchen_terraform.aws_instance.reachable_other_host: Destruction complete after 33s
+       module.extensive_kitchen_terraform.aws_instance.remote_group[1]: Destruction complete after 33s
+       module.extensive_kitchen_terraform.aws_key_pair.extensive_tutorial: Destroying... [id=kitchen-terraform-pLemH84MM]
+       module.extensive_kitchen_terraform.aws_subnet.extensive_tutorial: Destroying... [id=subnet-00c2dd3ed7e5e77dc]
+       module.extensive_kitchen_terraform.aws_security_group.extensive_tutorial: Destroying... [id=sg-072c3674363e136a3]
+       module.extensive_kitchen_terraform.aws_key_pair.extensive_tutorial: Destruction complete after 1s
+       module.extensive_kitchen_terraform.random_string.key_name: Destroying... [id=pLemH84MM]
+       module.extensive_kitchen_terraform.random_string.key_name: Destruction complete after 0s
+       module.extensive_kitchen_terraform.aws_subnet.extensive_tutorial: Destruction complete after 2s
+       module.extensive_kitchen_terraform.aws_security_group.extensive_tutorial: Destruction complete after 2s
+       module.extensive_kitchen_terraform.aws_vpc.extensive_tutorial: Destroying... [id=vpc-011d957e65c302fea]
+       module.extensive_kitchen_terraform.aws_vpc.extensive_tutorial: Destruction complete after 1s
+       
+       Destroy complete! Resources: 11 destroyed.
+$$$$$$ Running command `terraform workspace select default` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Switched to workspace "default".
+$$$$$$ Running command `terraform workspace delete kitchen-terraform-extensive-suite-ubuntu` in directory /Users.../kitchen-extensive-terraform/test/fixtures/wrapper
+       Deleted workspace "kitchen-terraform-extensive-suite-ubuntu"!
+       Finished destroying <extensive-suite-ubuntu> (0m58.59s).
+       Finished testing <extensive-suite-ubuntu> (2m36.73s).
+-----> Kitchen is finished. (2m38.31s)

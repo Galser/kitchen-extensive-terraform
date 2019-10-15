@@ -104,9 +104,8 @@ That's why there is `.ruby-version` file in the repo
       value = "${module.extensive_kitchen_terraform.remote_group_public_dns}" # no [] - brackets here
     }
     ```
-    - Main one : [outputs.tf](outputs.tf)
+    - Main one : [outputs.tf](outputs.tf):
     ```terraform
-    and main `outputs.tf` :
     output "remote_group_public_dns" {
       description = "The list of public DNS names of the remote_group instances"
       value       = "${aws_instance.remote_group.*.public_dns}" # no [] - brackets here
